@@ -1,0 +1,9 @@
+// Adds a new attribute to a document in the collection ``school``
+// updates * document with name="Holberton school"
+// adding attribute address with value "972 Mission street"while updating
+// db will be passed as option of mongo command
+db.school.update(
+	{name: "Holberton school"},
+	{$set: {address: "972 Mission street"}},
+	{multi:true}
+)
