@@ -19,8 +19,10 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
-    """Decorator to store the history of inputs and outputs for a particular function"""
+    """Decorator to store the history of\
+            inputs and outputs for a particular function"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """Wrapper function that stores call history"""
@@ -39,6 +41,7 @@ def call_history(method: Callable) -> Callable:
         return result
     return wrapper
 
+
 def replay(method: Callable):
     """Displays the history of calls of a particular function"""
     r = redis.Redis()
@@ -52,7 +55,9 @@ def replay(method: Callable):
     print(f"{method.__qualname__} was called {call_count} times:")
 
     for input_data, output_data in zip(input_list, output_list):
-        print(f"{method.__qualname__}(*{input_data.decode('utf-8')}) -> {output_data.decode('utf-8')}")
+        print(f"{method.__qualname__}(*{input_data.decode('utf-8')})\
+                -> {output_data.decode('utf-8')}")
+
 
 class Cache:
     """ Cache class to interact with Redis """
@@ -78,7 +83,8 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float, None]:
+    def get(self, key: str, 
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float, None]:
         """
         Retrieve data from Redis and optionally apply a transformation function
 
@@ -87,7 +93,8 @@ class Cache:
             fn (Optional[Callable]): A function to apply to the data
 
         Returns:
-            Union[str, bytes, int, float, None]: The retrieved data or None if key does not exist
+            Union[str, bytes, int, float, None]:\
+                    The retrieved data or None if key does not exist
         """
         data = self._redis.get(key)
         if data is None:
